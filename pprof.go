@@ -22,7 +22,6 @@ func WrapGroup(prefix string, g *echo.Group) {
 		Path    string
 		Handler echo.HandlerFunc
 	}{
-		{"GET", "", IndexHandler()},
 		{"GET", "/", IndexHandler()},
 		{"GET", "/allocs", AllocsHandler()},
 		{"GET", "/heap", HeapHandler()},
