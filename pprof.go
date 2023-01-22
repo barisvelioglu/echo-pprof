@@ -1,4 +1,4 @@
-package echopprof
+package main
 
 import (
 	"net/http/pprof"
