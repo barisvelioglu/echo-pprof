@@ -1,9 +1,10 @@
 package echopprof
 
 import (
-	"github.com/labstack/echo/v4"
 	"net/http/pprof"
 	"strings"
+
+	"github.com/labstack/echo/v4"
 )
 
 // Wrap adds several routes from package `net/http/pprof` to *echo.Echo object.
@@ -21,7 +22,8 @@ func WrapGroup(prefix string, g *echo.Group) {
 		Path    string
 		Handler echo.HandlerFunc
 	}{
-		{"GET", "/", IndexHandler()},
+		{"GET", "", IndexHandler()},
+		{"GET", "/allocs", IndexHandler()},
 		{"GET", "/heap", HeapHandler()},
 		{"GET", "/goroutine", GoroutineHandler()},
 		{"GET", "/block", BlockHandler()},
@@ -48,6 +50,14 @@ func WrapGroup(prefix string, g *echo.Group) {
 func IndexHandler() echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		pprof.Index(ctx.Response().Writer, ctx.Request())
+		return nil
+	}
+}
+
+// HeapHandler will pass the call from /debug/pprof/heap to pprof.
+func AllocsHandler() echo.HandlerFunc {
+	return func(ctx echo.Context) error {
+		pprof.Handler("allocs").ServeHTTP(ctx.Response(), ctx.Request())
 		return nil
 	}
 }
