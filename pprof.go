@@ -23,6 +23,7 @@ func WrapGroup(prefix string, g *echo.Group) {
 		Handler echo.HandlerFunc
 	}{
 		{"GET", "", IndexHandler()},
+		{"GET", "/", IndexHandler()},
 		{"GET", "/allocs", IndexHandler()},
 		{"GET", "/heap", HeapHandler()},
 		{"GET", "/goroutine", GoroutineHandler()},
